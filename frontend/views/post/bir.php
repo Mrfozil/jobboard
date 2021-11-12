@@ -1,0 +1,1 @@
+<h1>Salom men Post controllerining bir degan actioniman!</h1>
