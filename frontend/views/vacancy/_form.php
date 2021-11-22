@@ -4,8 +4,9 @@ use common\models\City;
 use common\models\JobType;
 use common\models\Profession;
 use common\models\Region;
-use kartik\select2\Select2;
 use dosamigos\tinymce\TinyMce;
+use kartik\select2\Select2;
+use mihaildev\ckeditor\CKEditor;
 use yii\helpers\Html;
 use yii\jui\DatePicker;
 use yii\widgets\ActiveForm;
@@ -17,11 +18,8 @@ use yii\widgets\ActiveForm;
 
 <div class="vacancy-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
 
-<!--    --><?//= $form->field($model, 'company_id')->textInput() ?>
-<!---->
-<!--    --><?//= $form->field($model, 'user_id')->textInput() ?>
 
     <div class="row">
         <div class="col-md-6">
@@ -63,59 +61,151 @@ use yii\widgets\ActiveForm;
     <div class="tab-content" id="myTabContent">
         <div class="tab-pane fade show active" id="descuz" role="tabpanel" aria-labelledby="descuz-tab">
             <?= $form->field($model, 'description_uz')->widget(TinyMce::className(), [
-    'options' => ['rows' => 6],
-    'language' => 'es',
-    'clientOptions' => [
-        'plugins' => [
-            "advlist autolink lists link charmap print preview anchor",
-            "searchreplace visualblocks code fullscreen",
-            "insertdatetime media table contextmenu paste"
-        ],
-        'toolbar' => "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
-    ]
-]);?>
+                'options' => ['rows' => 6],
+                'language' => 'ru',
+                'clientOptions' => [
+                    'plugins' => [
+                        "advlist autolink lists link charmap print preview anchor",
+                        "searchreplace visualblocks code fullscreen",
+                        "insertdatetime media table contextmenu paste",
+                        "save image imagetools textcolor fullscreen charmap"
+                    ],
+                    'toolbar' => "save | undo redo | code styleselect | fontselect fontsizeselect hilitecolor forecolor backcolor bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image imagetools media fullscreen charmap | redbtn defaultbuttons roundbuttons numscroller anchor",
+                    'fontsize_formats' => '8pt 10pt 12pt 14pt 18pt 20pt 24pt 36pt',
+                    'image_advtab' => true,
+                    'image_class_list' => [
+                        [
+                            'value' => '',
+                            'title' => 'None',
+                        ],
+                        [
+                            'value' => 'img-circle img-no-padding img-responsive',
+                            'title' => 'Circle',
+                        ],
+                        [
+                            'value' => 'img-rounded img-responsive',
+                            'title' => 'Rounded',
+                        ],
+                        [
+                            'value' => 'img-thumbnail img-responsive',
+                            'title' => 'Thumbnail',
+                        ]
+                    ],
+                    'images_upload_url' => '/postAcceptor.php',
+                    'plugin_prevqiew_width' => 1110,
+                ]
+            ]);?>
         </div>
         <div class="tab-pane fade" id="descru" role="tabpanel" aria-labelledby="descru-tab">
-           <?= $form->field($model, 'description_oz')->widget(TinyMce::className(), [
-    'options' => ['rows' => 6],
-    'language' => 'es',
-    'clientOptions' => [
-        'plugins' => [
-            "advlist autolink lists link charmap print preview anchor",
-            "searchreplace visualblocks code fullscreen",
-            "insertdatetime media table contextmenu paste"
-        ],
-        'toolbar' => "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
-    ]
-]);?>
+            <?= $form->field($model, 'description_ru')->widget(TinyMce::className(), [
+                'options' => ['rows' => 6],
+                'language' => 'ru',
+                'clientOptions' => [
+                    'plugins' => [
+                        "advlist autolink lists link charmap print preview anchor",
+                        "searchreplace visualblocks code fullscreen",
+                        "insertdatetime media table contextmenu paste",
+                        "save image imagetools textcolor fullscreen charmap"
+                    ],
+                    'toolbar' => "save | undo redo | code styleselect | fontselect fontsizeselect hilitecolor forecolor backcolor bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image imagetools media fullscreen charmap | redbtn defaultbuttons roundbuttons numscroller anchor",
+                    'fontsize_formats' => '8pt 10pt 12pt 14pt 18pt 20pt 24pt 36pt',
+                    'image_advtab' => true,
+                    'image_class_list' => [
+                        [
+                            'value' => '',
+                            'title' => 'None',
+                        ],
+                        [
+                            'value' => 'img-circle img-no-padding img-responsive',
+                            'title' => 'Circle',
+                        ],
+                        [
+                            'value' => 'img-rounded img-responsive',
+                            'title' => 'Rounded',
+                        ],
+                        [
+                            'value' => 'img-thumbnail img-responsive',
+                            'title' => 'Thumbnail',
+                        ]
+                    ],
+                    'images_upload_url' => '/postAcceptor.php',
+                    'plugin_prevqiew_width' => 1110,
+                ]
+            ]);?>
         </div>
         <div class="tab-pane fade" id="descen" role="tabpanel" aria-labelledby="descen-tab">
-            <?= $form->field($model, 'description_ru')->widget(TinyMce::className(), [
-    'options' => ['rows' => 6],
-    'language' => 'es',
-    'clientOptions' => [
-        'plugins' => [
-            "advlist autolink lists link charmap print preview anchor",
-            "searchreplace visualblocks code fullscreen",
-            "insertdatetime media table contextmenu paste"
-        ],
-        'toolbar' => "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
-    ]
-]);?>
+            <?= $form->field($model, 'description_en')->widget(TinyMce::className(), [
+                'options' => ['rows' => 6],
+                'language' => 'ru',
+                'clientOptions' => [
+                    'plugins' => [
+                        "advlist autolink lists link charmap print preview anchor",
+                        "searchreplace visualblocks code fullscreen",
+                        "insertdatetime media table contextmenu paste",
+                        "save image imagetools textcolor fullscreen charmap"
+                    ],
+                    'toolbar' => "save | undo redo | code styleselect | fontselect fontsizeselect hilitecolor forecolor backcolor bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image imagetools media fullscreen charmap | redbtn defaultbuttons roundbuttons numscroller anchor",
+                    'fontsize_formats' => '8pt 10pt 12pt 14pt 18pt 20pt 24pt 36pt',
+                    'image_advtab' => true,
+                    'image_class_list' => [
+                        [
+                            'value' => '',
+                            'title' => 'None',
+                        ],
+                        [
+                            'value' => 'img-circle img-no-padding img-responsive',
+                            'title' => 'Circle',
+                        ],
+                        [
+                            'value' => 'img-rounded img-responsive',
+                            'title' => 'Rounded',
+                        ],
+                        [
+                            'value' => 'img-thumbnail img-responsive',
+                            'title' => 'Thumbnail',
+                        ]
+                    ],
+                    'images_upload_url' => '/postAcceptor.php',
+                    'plugin_prevqiew_width' => 1110,
+                ]
+            ]);?>
         </div>
         <div class="tab-pane fade" id="descoz" role="tabpanel" aria-labelledby="descoz-tab">
-           <?= $form->field($model, 'description_en')->widget(TinyMce::className(), [
-    'options' => ['rows' => 6],
-    'language' => 'es',
-    'clientOptions' => [
-        'plugins' => [
-            "advlist autolink lists link charmap print preview anchor",
-            "searchreplace visualblocks code fullscreen",
-            "insertdatetime media table contextmenu paste"
-        ],
-        'toolbar' => "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
-    ]
-]);?>
+            <?= $form->field($model, 'description_oz')->widget(TinyMce::className(), [
+                'options' => ['rows' => 6],
+                'language' => 'ru',
+                'clientOptions' => [
+                    'plugins' => [
+                        "advlist autolink lists link charmap print preview anchor",
+                        "searchreplace visualblocks code fullscreen",
+                        "insertdatetime media table contextmenu paste",
+                        "save image imagetools textcolor fullscreen charmap"
+                    ],
+                    'toolbar' => "save | undo redo | code styleselect | fontselect fontsizeselect hilitecolor forecolor backcolor bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image imagetools media fullscreen charmap | redbtn defaultbuttons roundbuttons numscroller anchor",
+                    'fontsize_formats' => '8pt 10pt 12pt 14pt 18pt 20pt 24pt 36pt',
+                    'image_advtab' => true,
+                    'image_class_list' => [
+                        [
+                            'value' => '',
+                            'title' => 'None',
+                        ],
+                        [
+                            'value' => 'img-circle img-no-padding img-responsive',
+                            'title' => 'Circle',
+                        ],
+                        [
+                            'value' => 'img-rounded img-responsive',
+                            'title' => 'Rounded',
+                        ],
+                        [
+                            'value' => 'img-thumbnail img-responsive',
+                            'title' => 'Thumbnail',
+                        ]
+                    ],
+                    'images_upload_url' => '/postAcceptor.php',
+                    'plugin_prevqiew_width' => 1110,
+                ]
+            ]);?>
         </div>
     </div>
 
@@ -133,7 +223,7 @@ use yii\widgets\ActiveForm;
         </div>
         <div class="col-md-4">
             <?= $form->field($model, 'city_id')->widget(Select2::classname(), [
-                'data' => [],
+                'data' => City::selectList(),
                 'language' => 'ru',
                 'options' => ['placeholder' => 'Tumanni tanlang ...'],
                 'pluginOptions' => [
@@ -158,7 +248,15 @@ use yii\widgets\ActiveForm;
     </div>
     <div class="row">
         <div class="col-md-4">
-            <?= $form->field($model, 'gender')->textInput() ?>
+            <?= $form->field($model, 'gender')->dropDownList(
+                [
+                    1 => 'Erkak',
+                    2 => 'Ayol'
+                ],
+                [
+                    'prompt' => 'Jinsi ...'
+                ]
+            ) ?>
         </div>
         <div class="col-md-4">
             <?= $form->field($model, 'experience')->textInput() ?>
@@ -172,6 +270,9 @@ use yii\widgets\ActiveForm;
             [
                 1 => 'Active',
                 2 => 'Inactive'
+            ],
+            [
+                'prompt' => 'Status ...'
             ]
     ) ?>
 
@@ -181,3 +282,4 @@ use yii\widgets\ActiveForm;
 
     <?php ActiveForm::end(); ?>
 
+</div>

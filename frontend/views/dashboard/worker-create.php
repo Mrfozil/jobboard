@@ -5,8 +5,10 @@
 /* @var $model \frontend\models\SignupForm */
 
 use common\models\City;
+use common\models\LaborActivity;
 use common\models\Nationality;
 use common\models\Region;
+use common\models\WorkerLanguage;
 use kartik\date\DatePicker;
 use yii\bootstrap4\Html;
 use yii\bootstrap4\ActiveForm;
@@ -35,8 +37,15 @@ use yii\helpers\ArrayHelper;
                 <?php endif; ?>
             </div>
         </div>
-        <?= $this->render('_worker-form', [
-            'model' => $model
+        <div class="row">
+            <div class="col-md-12">
+                <h2 class="mb-4"><?= Yii::t('app', 'Create worker informations')?></h2>
+            </div>
+        </div>
+        <?= $this->render('_form', [
+            'model' => $model,
+            'modelsLanguage' => (empty($modelsLanguage)) ? [new WorkerLanguage()] : $modelsLanguage,
+            'modelsLaborActivity' => (empty($modelsLaborActivity)) ? [new LaborActivity()] : $modelsLaborActivity
         ])?>
     </div>
 </div>

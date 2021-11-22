@@ -14,11 +14,16 @@ class VacancySearch extends Vacancy
     /**
      * {@inheritdoc}
      */
+
+    public $from_salary;
+    public $end_salary;
+
     public function rules()
     {
         return [
-            [['id'], 'integer'],
-
+            [['id', 'company_id', 'user_id', 'profession_id', 'job_type_id', 'region_id', 'city_id', 'count_vacancy', 'gender', 'experience', 'views', 'status'], 'integer'],
+            [['description_uz', 'description_ru', 'description_en', 'description_oz', 'image', 'telegram', 'address', 'deadline', 'created_at', 'updated_at', 'from_salary', 'end_salary'], 'safe'],
+            [['salary'], 'number'],
         ];
     }
 
@@ -36,6 +41,7 @@ class VacancySearch extends Vacancy
      *
      * @param array $params
      *
+     * @return ActiveDataProvider
      */
     public function search($params)
     {
@@ -58,7 +64,31 @@ class VacancySearch extends Vacancy
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
+            'company_id' => $this->company_id,
+            'user_id' => $this->user_id,
+            'profession_id' => $this->profession_id,
+            'job_type_id' => $this->job_type_id,
+            'region_id' => $this->region_id,
+            'city_id' => $this->city_id,
+            'count_vacancy' => $this->count_vacancy,
+            'salary' => $this->salary,
+            'gender' => $this->gender,
+            'experience' => $this->experience,
+            'views' => $this->views,
+            'status' => $this->status,
+            'deadline' => $this->deadline,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
         ]);
+
+        $query->andFilterWhere(['between', 'salary', $this->from_salary ? $this->from_salary : 0, $this->end_salary])
+            ->andFilterWhere(['like', 'description_uz', $this->description_uz])
+            ->andFilterWhere(['like', 'description_ru', $this->description_ru])
+            ->andFilterWhere(['like', 'description_en', $this->description_en])
+            ->andFilterWhere(['like', 'description_oz', $this->description_oz])
+            ->andFilterWhere(['like', 'image', $this->image])
+            ->andFilterWhere(['like', 'telegram', $this->telegram])
+            ->andFilterWhere(['like', 'address', $this->address]);
 
         return $dataProvider;
     }

@@ -13,17 +13,45 @@ return [
         'log',
         'languagepicker',
     ],
+    'modules' => [
+        'admn' => [
+            'class' => 'mdm\admin\Module',
+            'layout' => 'left-menu',
+            'mainLayout' => '@app/views/layouts/main.php',
+
+            'menus' => [
+                'assignment' => [
+                    'label' => 'Grand Access UZ', // change label
+                ],
+//                'user' => null, // disable menu route
+            ]
+        ]
+    ],
     'language' => 'en',
     'controllerNamespace' => 'frontend\controllers',
     'components' => [
+        'authManager' => [
+            'class' => 'yii\rbac\DbManager',
+        ],
         'i18n' => [
             'translations' => [
                 'app' => [
                     'class' => 'yii\i18n\PhpMessageSource',
                     'sourceLanguage' => 'en-US',
-//                    'basePath' => 'common/messages',
                     'basePath' => __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'common/messages',
                 ],
+            ],
+        ],
+        'mailer' => [
+            'class' => 'yii\swiftmailer\Mailer',
+            'useFileTransport' => false,
+            'transport' => [
+                'class' => 'Swift_SmtpTransport',
+                'host' => 'smtp.gmail.com',
+                'username' => 'sardor0418@gmail.com',
+                'password' => 'djnauijtvupqolnd',
+                'port' => '587',
+                'encryption' => 'tls',
             ],
         ],
         'languagepicker' => [
@@ -42,12 +70,14 @@ return [
         ],
         'user' => [
             'identityClass' => 'common\models\User',
-            'enableAutoLogin' => true,
+            'enableAutoLogin' => false,
             'identityCookie' => ['name' => '_identity-frontend', 'httpOnly' => true],
+            'authTimeout' => 60 * 10,
         ],
         'session' => [
             // this is the name of the session cookie used for login on the frontend
             'name' => 'advanced-frontend',
+            'timeout' => 60 * 10,
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
@@ -71,4 +101,16 @@ return [
 
     ],
     'params' => $params,
+
+    'as access' => [
+        'class' => 'mdm\admin\components\AccessControl',
+        'allowActions' => [
+            'site/*',
+            'ajax/*',
+            'admn/*',
+            'gii/*',
+            'vacancy/list',
+            'vacancy/single',
+        ]
+    ],
 ];

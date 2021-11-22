@@ -27,8 +27,15 @@
                 <?php endif; ?>
             </div>
         </div>
-        <?= $this->render('_worker-form', [
-                'model' => $model
+        <div class="row">
+            <div class="col-md-12">
+                <h2 class="mb-4"><?= Yii::t('app', 'Edit worker informations')?></h2>
+            </div>
+        </div>
+        <?= $this->render('_form', [
+            'model' => $model,
+            'modelsLanguage' => $modelsLanguage,
+            'modelsLaborActivity' => $modelsLaborActivity,
         ])?>
     </div>
 </div>

@@ -45,4 +45,8 @@ class Region extends \yii\db\ActiveRecord
         ];
     }
 
+    public function getRegion()
+    {
+        return $this->hasOne(Region::class, ['id' => 'customer_id']);
+    }
 }

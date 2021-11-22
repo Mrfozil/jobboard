@@ -18,6 +18,8 @@ class m211019_043527_create_profession_table extends Migration
             'name_ru' => $this->string(),
             'name_en' => $this->string(),
             'name_oz' => $this->string(),
+            'created_at' => $this->timestamp()->defaultExpression('NOW()'),
+            'updated_at' => $this->timestamp()->defaultExpression('CURRENT_TIMESTAMP')->append('ON UPDATE NOW()'),
         ]);
     }
 

@@ -39,7 +39,7 @@ AppAsset::register($this);
 
 <?= Yii::$app->controller->renderPartial("//sections/header") ?>
 
-    <div class="container">
+    <div class="container-fluid p-0 m-0">
         <?= $content ?>
     </div>
 

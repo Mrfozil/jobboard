@@ -9,6 +9,7 @@ use yii\widgets\DetailView;
 $this->title = $model->id;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Vacancies'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
+$name = 'name_' . Yii::$app->language;
 \yii\web\YiiAsset::register($this);
 ?>
 <div class="vacancy-view">
@@ -39,8 +40,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'user_id',
             [
                 'attribute' => 'profession_id',
-                'value' => function($model){
-                    return $model->profession ? $model->profession->name_uz : null;
+                'value' => function($model) use ($name) {
+                    return $model->profession ? $model->profession->$name : null;
                 }
             ],
             'description_uz:html',
@@ -49,23 +50,27 @@ $this->params['breadcrumbs'][] = $this->title;
             'description_oz:html',
             [
                 'attribute' => 'job_type_id',
-                'value' => function($model){
-                    return $model->jobType ? $model->jobType->name_uz : null;
+                'value' => function($model) use ($name) {
+                    return $model->jobType ? $model->jobType->$name : null;
                 }
             ],
             [
                 'attribute' => 'region_id',
-                'value' => function($model){
-                    return $model->region ? $model->region->name_uz : null;
+                'value' => function($model) use ($name) {
+                    return $model->region ? $model->region->$name : null;
                 }
             ],
             [
                 'attribute' => 'city_id',
-                'value' => function($model){
-                    return $model->city ? $model->city->name_uz : null;
+                'value' => function($model) use ($name) {
+                    return $model->city ? $model->city->$name : null;
                 }
             ],
-            'image',
+            [
+                'attribute'=>'image',
+                'value'=> Yii::$app->homeUrl . $model->image,
+                'format' => ['image',['width'=>'200']],
+            ],
             'count_vacancy',
             'salary',
             'gender',
@@ -75,6 +80,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'views',
             'status',
             'deadline',
+
             'created_at',
             'updated_at',
         ],

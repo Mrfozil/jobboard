@@ -5,11 +5,14 @@ namespace frontend\controllers;
 use common\models\Appeals;
 use common\models\Company;
 use common\models\Partners;
+use common\models\Statistic;
+use common\models\Vacancy;
 use common\models\Worker;
 use frontend\models\ResendVerificationEmailForm;
 use frontend\models\VerifyEmailForm;
 use Yii;
 use yii\base\InvalidArgumentException;
+use yii\data\Pagination;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
@@ -81,7 +84,24 @@ class SiteController extends Controller
     public function actionIndex()
     {
         $partners = Partners::find()->where(['status' => 1])->orderBy(['order' => SORT_ASC])->all();
-        return $this->render('index', ['partners' => $partners]);
+        $statistics = Statistic::findOne(1);
+        $vacancys = Vacancy::find()->limit(8)->all();
+
+        $query = Vacancy::find();
+
+        $count = $query->count();
+
+        $pagination = new Pagination([
+            'totalCount' => $count,
+            'pageSize' => 4
+        ]);
+
+        return $this->render('index', [
+            'partners' => $partners,
+            'statistics' => $statistics,
+            'vacancys' => $vacancys,
+            'pagination' => $pagination
+        ]);
     }
 
     /**
@@ -98,7 +118,7 @@ class SiteController extends Controller
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             if ($this->findModel($model->user->id)){
-                return $this->redirect('/dashboard/index');
+                return $this->redirect('/dashboard/');
             }else{
                 return  $this->redirect('/dashboard/worker');
             }
@@ -173,17 +193,19 @@ class SiteController extends Controller
         $user = new SignupForm();
         $company = new Company();
         $company->scenario = Company::SCENARIO_SIGNUP;
-        if ($company->load(Yii::$app->request->post())) 
-    {        $user->username = $company->username;
+        if ($company->load(Yii::$app->request->post())) {
+            $user->username = $company->username;
             $user->password = $company->password;
             $user->email = $company->email;
-            $user->status = 10;
- //           vd($company);
+            $user->status = 9;
+            $user->role = 'company';
+
             if ($user = $user->signup()){
                 if (UploadedFile::getInstance($company, 'imgLogo')){
                     $company->imgLogo = UploadedFile::getInstance($company, 'imgLogo');
                     $company->logo = 'img/company/' . $company->imgLogo->baseName . '.' . $company->imgLogo->extension;
                     $company->userId = $user->id;
+
                     if ($company->upload() && $company->save()){
                         Yii::$app->session->setFlash('success', 'Sizning korxonzngiz muvoffaqqiyatli qo`shildi.');
                     }else{
@@ -191,9 +213,6 @@ class SiteController extends Controller
                     }
                     return $this->refresh();
                 }
-
-            } else {
-                vd($user->errors);
             }
         }
 
@@ -207,9 +226,10 @@ class SiteController extends Controller
         $user = new SignupForm();
 
         if ($user->load(Yii::$app->request->post())){
-            $user->status = 10;
+//            $user->status = 10;
+            $user->role = 'worker';
             if ($user->signup()){
-                Yii::$app->session->setFlash('success', 'Siz muvoffaqqiyatli ro`yxatdan o`tdingiz.');
+                Yii::$app->session->setFlash('success', 'Siz muvoffaqqiyatli ro`yxatdan o`tdingiz, pochtangiz orqali profilingizni aktivlashtiring.');
                 return $this->refresh();
             }else{
                 Yii::$app->session->setFlash('error', 'Nimadadir xato boldi!');

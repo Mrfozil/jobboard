@@ -16,7 +16,7 @@ use yii\bootstrap4\Nav;
     </div> <!-- .site-mobile-menu -->
 
 <!-- NAVBAR -->
-<header class="site-navbar mt-3">
+<header class="site-navbar mt-3 bg-danger">
     <div class="container-fluid">
         <div class="row align-items-center">
             <div class="site-logo col-6"><a href="/">JobBoard</a></div>
@@ -76,16 +76,3 @@ use yii\bootstrap4\Nav;
 </header>
 
 <!-- HOME -->
-<section class="section-hero overlay inner-page bg-image" style="background-image: url('/jobboard/images/hero_1.jpg');" id="home-section">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-7">
-                <h1 class="text-white font-weight-bold">Home</h1>
-                <div class="custom-breadcrumbs">
-                    <a href="/">Home</a> <span class="mx-2 slash">/</span>
-<!--                    <span class="text-white"><strong>Contact Us</strong></span>-->
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
