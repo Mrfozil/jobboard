@@ -48,7 +48,7 @@ return [
             'transport' => [
                 'class' => 'Swift_SmtpTransport',
                 'host' => 'smtp.gmail.com',
-                'username' => 'sardor0418@gmail.com',
+                'username' => 'mirfozilm85@gmail.com',
                 'password' => 'djnauijtvupqolnd',
                 'port' => '587',
                 'encryption' => 'tls',

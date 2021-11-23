@@ -33,6 +33,7 @@ class WorkerController extends Controller
 
     /**
      * Lists all Worker models.
+     * nima muammo hoz korsataman ovozim eshitildimi
      * @return mixed
      */
     public function actionIndex()
